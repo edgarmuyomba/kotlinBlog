@@ -2,11 +2,19 @@ package com.example.kotlinblog.ui.layout.homescreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Menu
@@ -17,12 +25,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.kotlinblog.models.Article
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,12 +95,67 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         })
     }) { contentPadding ->
         Column(
-            modifier = Modifier.padding(contentPadding)
+            modifier = Modifier
+                .padding(contentPadding)
+                .padding(12.dp)
+                .fillMaxSize()
         ) {
-            Text("Home Screen")
-
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Breaking News",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                )
+                TextButton(
+                    onClick = {}
+                ) {
+                    Text(
+                        text = "View all",
+                        style = TextStyle(
+                            color = Color(0xff2668d1)
+                        )
+                    )
+                }
+            }
+//            LazyRow() {
+//                items(7) {
+//                    NewsCard(article = article)
+//                }
+//            }
+            HeadlinesScroller()
         }
     }
+}
+
+@Preview
+@Composable
+fun HeadlinesScroller(modifier: Modifier = Modifier) {
+
+    val pagerState = rememberPagerState(pageCount = { 7 })
+
+    val articles = buildList<Article> { repeat(7) { add(article) } }
+
+    HorizontalPager(
+        state = pagerState,
+        contentPadding = PaddingValues(horizontal = 64.dp),
+        pageSpacing = 16.dp,
+        modifier = Modifier.fillMaxWidth(),
+        pageSize = PageSize.Fixed(300.dp)
+    ) { index ->
+        NewsCard(
+            article = articles[index], modifier = Modifier
+                .fillMaxWidth()
+        )
+
+    }
+
+
 }
 
 @Preview
