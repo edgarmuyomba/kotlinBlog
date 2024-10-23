@@ -33,6 +33,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -169,12 +172,15 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 @Composable
 fun HeadlinesScroller(homeViewModel: HomeViewModel = viewModel(), modifier: Modifier = Modifier) {
 
-    val pagerState = rememberPagerState(pageCount = { 7 })
+    var articleCount by remember { mutableStateOf(0) }
+
+    val pagerState = rememberPagerState(pageCount = { articleCount })
 
     val breakingNewsState by homeViewModel.breakingNews.collectAsState()
 
     when (breakingNewsState) {
         is BlogUiState.Success -> {
+            articleCount = (breakingNewsState as BlogUiState.Success).articles.size
             HorizontalPager(
                 state = pagerState,
                 contentPadding = PaddingValues(start = 24.dp, end = 64.dp),
@@ -215,15 +221,45 @@ fun HeadlinesScroller(homeViewModel: HomeViewModel = viewModel(), modifier: Modi
 }
 
 @Composable
-fun NewsDetailsCards(modifier: Modifier = Modifier) {
+fun NewsDetailsCards(homeViewModel: HomeViewModel = viewModel(), modifier: Modifier = Modifier) {
+
+    val recommendedNewsState by homeViewModel.recommendedNews.collectAsState()
+
     val articles = buildList<Article> { repeat(7) { add(article) } }
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        items(articles.size) {
-            NewsDetailsCard(article = articles[it])
+
+    when (recommendedNewsState) {
+        is BlogUiState.Success -> {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                items((recommendedNewsState as BlogUiState.Success).articles.size) {
+                    NewsDetailsCard(article = (recommendedNewsState as BlogUiState.Success).articles[it])
+                }
+            }
+        }
+
+        is BlogUiState.Loading -> {
+            Box(
+                modifier = Modifier
+                    .height(200.dp)
+                    .fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LoadingIndicator()
+                }
+            }
+        }
+
+        is BlogUiState.Error -> {
+            Text(text = "Error")
         }
     }
+
+
 }
 
 @Preview

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.kotlinblog.R
 import com.example.kotlinblog.models.Article
 import com.example.kotlinblog.utils.Utilities
 
@@ -35,7 +36,8 @@ fun NewsDetailsCard(article: Article, modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(context = LocalContext.current).data(article.imageUrl)
+            model = ImageRequest.Builder(context = LocalContext.current)
+                .data(article.imageUrl ?: R.drawable.no_image)
                 .build(),
             contentDescription = "Image Details Card",
             contentScale = ContentScale.Crop,
