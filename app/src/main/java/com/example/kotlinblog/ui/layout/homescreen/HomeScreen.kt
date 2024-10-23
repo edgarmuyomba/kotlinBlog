@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
@@ -97,7 +98,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .padding(contentPadding)
-                .padding(12.dp)
+                .padding(16.dp)
                 .fillMaxSize()
         ) {
             Row(
@@ -123,17 +124,37 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     )
                 }
             }
-//            LazyRow() {
-//                items(7) {
-//                    NewsCard(article = article)
-//                }
-//            }
             HeadlinesScroller()
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp)
+            ) {
+                Text(
+                    text = "Recommendation",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                )
+                TextButton(
+                    onClick = {}
+                ) {
+                    Text(
+                        text = "View all",
+                        style = TextStyle(
+                            color = Color(0xff2668d1)
+                        )
+                    )
+                }
+            }
+            NewsDetailsCards()
         }
     }
 }
 
-@Preview
 @Composable
 fun HeadlinesScroller(modifier: Modifier = Modifier) {
 
@@ -143,10 +164,10 @@ fun HeadlinesScroller(modifier: Modifier = Modifier) {
 
     HorizontalPager(
         state = pagerState,
-        contentPadding = PaddingValues(horizontal = 64.dp),
-        pageSpacing = 16.dp,
+        contentPadding = PaddingValues(start = 24.dp, end = 64.dp),
+        pageSpacing = 12.dp,
         modifier = Modifier.fillMaxWidth(),
-        pageSize = PageSize.Fixed(300.dp)
+        pageSize = PageSize.Fixed(320.dp)
     ) { index ->
         NewsCard(
             article = articles[index], modifier = Modifier
@@ -154,8 +175,18 @@ fun HeadlinesScroller(modifier: Modifier = Modifier) {
         )
 
     }
+}
 
-
+@Composable
+fun NewsDetailsCards(modifier: Modifier = Modifier) {
+    val articles = buildList<Article> { repeat(7) { add(article) } }
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        items(articles.size) {
+            NewsDetailsCard(article = articles[it])
+        }
+    }
 }
 
 @Preview

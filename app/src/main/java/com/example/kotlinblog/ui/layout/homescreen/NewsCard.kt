@@ -39,7 +39,7 @@ import com.example.kotlinblog.utils.Utilities
 fun NewsCard(article: Article, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .fillMaxWidth(0.9f)
+            .fillMaxWidth()
             .height(200.dp)
             .clip(RoundedCornerShape(10.dp))
             .border(shape = RoundedCornerShape(10.dp), width = 1.dp, color = Color.White)

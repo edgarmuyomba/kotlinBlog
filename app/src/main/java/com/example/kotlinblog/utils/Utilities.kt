@@ -1,7 +1,11 @@
 package com.example.kotlinblog.utils
 
+import android.os.Build
 import android.text.format.DateUtils
+import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.TimeZone
 
@@ -17,5 +21,12 @@ class Utilities {
             System.currentTimeMillis(),
             DateUtils.MINUTE_IN_MILLIS
         ).toString()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getFormalTime(timeString: String): String {
+        val zonedDateTime = ZonedDateTime.parse(timeString)
+        val formatter = DateTimeFormatter.ofPattern("MMM dd, yyy")
+        return zonedDateTime.format(formatter)
     }
 }
