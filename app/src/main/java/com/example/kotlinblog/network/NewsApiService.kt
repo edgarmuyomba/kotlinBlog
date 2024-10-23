@@ -1,6 +1,5 @@
 package com.example.kotlinblog.network
 
-import com.example.kotlinblog.models.Article
 import retrofit2.http.GET
 import retrofit2.http.Query
 
