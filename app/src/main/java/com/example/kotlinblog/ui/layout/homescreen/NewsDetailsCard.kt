@@ -35,7 +35,7 @@ fun NewsDetailsCard(article: Article, modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(context = LocalContext.current).data(article.urlToImage)
+            model = ImageRequest.Builder(context = LocalContext.current).data(article.imageUrl)
                 .build(),
             contentDescription = "Image Details Card",
             contentScale = ContentScale.Crop,
@@ -56,7 +56,7 @@ fun NewsDetailsCard(article: Article, modifier: Modifier = Modifier) {
             Spacer(Modifier.height(10.dp))
             Row {
                 Text(
-                    text = article.author,
+                    text = article.author ?: "Unknown",
                 )
                 Spacer(Modifier.width(10.dp))
                 Text(

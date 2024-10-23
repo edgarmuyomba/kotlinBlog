@@ -9,7 +9,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.kotlinblog.KotlinBlogApplication
 import com.example.kotlinblog.data.NewsRepository
-import com.example.kotlinblog.models.Article
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

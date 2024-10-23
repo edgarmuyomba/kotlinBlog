@@ -1,20 +1,25 @@
 package com.example.kotlinblog.data
 
+import com.example.kotlinblog.BuildConfig
 import com.example.kotlinblog.models.Article
+import com.example.kotlinblog.models.NewsResponse
 import com.example.kotlinblog.network.NewsApiService
+import com.example.kotlinblog.ui.layout.homescreen.article
 
 interface NewsRepository {
-    suspend fun getHeadlines(): List<Article> // https://newsapi.org/v2/top-headlines?country=us&apiKey=4ff940b0d27a4831b43c45d70c95edd7
+    suspend fun getHeadlines(): List<Article>
 
-    suspend fun searchNews(query: String): List<Article> // https://newsapi.org/v2/everything?q=query&sortBy=popularity&apiKey=API_KEY
+    suspend fun searchNews(query: String): List<Article>
 }
 
-class NetworkNewsRepository(apiService: NewsApiService) : NewsRepository {
+class NetworkNewsRepository(private val apiService: NewsApiService) : NewsRepository {
     override suspend fun getHeadlines(): List<Article> {
-        return emptyList()
+        val response: NewsResponse = apiService.getHeadlines(apiKey = BuildConfig.API_KEY);
+        return response.articles
     }
 
     override suspend fun searchNews(query: String): List<Article> {
-        return emptyList()
+        val articles = buildList<Article> { repeat(7) { add(article) } }
+        return articles
     }
 }

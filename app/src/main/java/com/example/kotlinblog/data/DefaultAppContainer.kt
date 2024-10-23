@@ -16,8 +16,15 @@ class DefaultAppContainer : AppContainer {
 
     private val API_KEY = BuildConfig.API_KEY
 
+    private val json = Json {
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+        isLenient = true
+        encodeDefaults = true
+    }
+
     private val retrofit: Retrofit = Retrofit.Builder()
-        .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .baseUrl(baseUrl)
         .build()
 
