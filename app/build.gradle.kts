@@ -1,8 +1,17 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
+
+val localProperties = gradleLocalProperties(
+    projectRootDir = rootDir,
+    providers = providers
+)
+
 
 android {
     namespace = "com.example.kotlinblog"
@@ -16,6 +25,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -25,6 +35,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY")}\"")
+        }
+        debug {
+            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY")}\"")
         }
     }
     compileOptions {
@@ -36,6 +50,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -53,6 +68,9 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
+    implementation(libs.retrofit)
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.retrofit.kotlin.serialization.converter)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -12,6 +12,11 @@ materialIcons = "1.7.4"
 coilCompose = "2.7.0"
 accompanistPager = "0.36.0"
 accompanistPagerIndicators = "0.34.0"
+retrofit = "2.11.0"
+kotlinSerializationPlugin = "1.9.10"
+kotlinSerializationJson = "1.6.0"
+kotlinSerializationConverter = "1.0.0"
+cookpadAndroidDotenv = "0.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,9 +37,13 @@ material-icons-extended = { group = 'androidx.compose.material', name='material-
 coil-compose = { group = 'io.coil-kt', name = 'coil-compose', version.ref = 'coilCompose' }
 accompanist-pager = { group = 'com.google.accompanist', name = 'accompanist-pager', version.ref = 'accompanistPager' }
 accompanist-pager-indicators = { group = 'com.google.accompanist', name = 'accompanist-pager-indicators', version.ref = 'accompanistPagerIndicators'}
+retrofit = { group = 'com.squareup.retrofit2', name = 'retrofit', version.ref = 'retrofit' }
+kotlin-serialization-json = { group = 'org.jetbrains.kotlinx', name = 'kotlinx-serialization-json', version.ref = 'kotlinSerializationJson'}
+retrofit-kotlin-serialization-converter = { group = 'com.jakewharton.retrofit', name = 'retrofit2-kotlinx-serialization-converter', version.ref = 'kotlinSerializationConverter'}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerializationPlugin"}
 
