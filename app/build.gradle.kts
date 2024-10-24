@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.kotlin.serialization.json)
     implementation(libs.retrofit.kotlin.serialization.converter)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

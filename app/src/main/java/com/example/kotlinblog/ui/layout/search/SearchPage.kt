@@ -53,7 +53,7 @@ import com.example.kotlinblog.ui.layout.homescreen.NewsDetailsCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchPage(modifier: Modifier = Modifier) {
+fun SearchPage(onBackButtonClicked: () -> Unit, modifier: Modifier = Modifier) {
 
     val searchViewModel: SearchViewModel = viewModel(factory = SearchViewModel.Factory)
 
@@ -66,7 +66,9 @@ fun SearchPage(modifier: Modifier = Modifier) {
                     )
                     .background(color = Color(0xffededed), shape = RoundedCornerShape(50))
             ) {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {
+                    searchViewModel.clearSearchQuery()
+                    onBackButtonClicked() }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBackIosNew,
                         contentDescription = "Back Button"
@@ -279,10 +281,4 @@ fun Articles(searchViewModel: SearchViewModel = viewModel(), modifier: Modifier 
         }
     }
 
-}
-
-@Preview
-@Composable
-fun SearchPagePreview() {
-    SearchPage()
 }

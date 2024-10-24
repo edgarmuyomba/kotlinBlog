@@ -22,7 +22,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -45,14 +44,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.kotlinblog.models.Article
 import com.example.kotlinblog.state.BlogUiState
 import com.example.kotlinblog.state.HomeViewModel
 import com.example.kotlinblog.ui.generic.LoadingIndicator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(onSearchButtonClicked: () -> Unit, modifier: Modifier = Modifier) {
 
     val homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory)
 
@@ -70,7 +68,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     onClick = { }) {
                     Icon(
                         imageVector = Icons.Outlined.Menu,
-                        contentDescription = "Notifications"
+                        contentDescription = "Menu"
                     )
                 }
             }
@@ -84,7 +82,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             ) {
                 IconButton(
                     modifier = Modifier.padding(0.dp),
-                    onClick = { }) {
+                    onClick = {
+                        onSearchButtonClicked()
+                    }) {
                     Icon(
                         imageVector = Icons.Outlined.Search, contentDescription = "Search"
                     )
@@ -258,10 +258,4 @@ fun NewsDetailsCards(homeViewModel: HomeViewModel = viewModel(), modifier: Modif
     }
 
 
-}
-
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
 }
