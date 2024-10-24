@@ -2,7 +2,12 @@ package com.example.kotlinblog.state
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.kotlinblog.KotlinBlogApplication
 import com.example.kotlinblog.data.NewsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -51,6 +56,8 @@ class SearchViewModel(private val newsRepository: NewsRepository) : ViewModel() 
 
     fun setSelectedTag(tag: Tag) {
         _selectedTag.value = tag
+        Log.d("SearchViewModel", "Selected tag: ${_selectedTag.value}")
+//        getTagResults()
     }
 
     fun getTagResults() {
@@ -63,6 +70,16 @@ class SearchViewModel(private val newsRepository: NewsRepository) : ViewModel() 
                 Log.e("SearchViewModel", e.toString())
                 _tagResults.value =
                     BlogUiState.Error("Failed to get results for ${_selectedTag.value.value}")
+            }
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[APPLICATION_KEY] as KotlinBlogApplication)
+                val newsRepository = application.container.newsRepository
+                SearchViewModel(newsRepository = newsRepository)
             }
         }
     }

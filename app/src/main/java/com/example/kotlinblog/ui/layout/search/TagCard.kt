@@ -2,6 +2,7 @@ package com.example.kotlinblog.ui.layout.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,9 +15,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kotlinblog.state.Tag
 
 @Composable
-fun TagCard(text: String, selected: Boolean, modifier: Modifier = Modifier) {
+fun TagCard(tag: Tag, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .border(
@@ -26,9 +28,10 @@ fun TagCard(text: String, selected: Boolean, modifier: Modifier = Modifier) {
             .background(
                 color = if (selected) Color(0xff2668d1) else Color(0xffededed)
             )
+            .clickable { onClick() }
     ) {
         Text(
-            text = text,
+            text = tag.value,
             style = TextStyle(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
