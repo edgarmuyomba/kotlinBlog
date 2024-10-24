@@ -68,10 +68,16 @@ fun NewsDetailsCard(
             Row {
                 Text(
                     text = author,
+                    style = TextStyle(
+                        fontSize = 13.sp
+                    )
                 )
                 Spacer(Modifier.width(10.dp))
                 Text(
                     text = "•   " + Utilities().getFormalTime(article.publishedAt),
+                    style = TextStyle(
+                        fontSize = 13.sp
+                    )
                 )
             }
         }
