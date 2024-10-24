@@ -1,6 +1,7 @@
 package com.example.kotlinblog.ui.layout.homescreen
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,7 +29,11 @@ import com.example.kotlinblog.models.Article
 import com.example.kotlinblog.utils.Utilities
 
 @Composable
-fun NewsDetailsCard(article: Article, modifier: Modifier = Modifier) {
+fun NewsDetailsCard(
+    article: Article,
+    onCardClicked: (article: Article) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     val author = (article.author ?: "Unknown").split(" ").take(2).joinToString(" ")
 
@@ -56,7 +61,8 @@ fun NewsDetailsCard(article: Article, modifier: Modifier = Modifier) {
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
-                )
+                ),
+                modifier = Modifier.clickable { onCardClicked(article) }
             )
             Spacer(Modifier.height(10.dp))
             Row {
@@ -70,10 +76,4 @@ fun NewsDetailsCard(article: Article, modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun NewsDetailsCardPreview() {
-    NewsDetailsCard(article = article)
 }

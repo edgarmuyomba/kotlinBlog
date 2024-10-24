@@ -48,123 +48,124 @@ import com.example.kotlinblog.utils.Utilities
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArticleDetailsPage(article: Article, modifier: Modifier = Modifier) {
+fun ArticleDetailsPage(article: Article?, modifier: Modifier = Modifier) {
 
     val scrollState = rememberScrollState()
 
     Scaffold { contentPadding ->
-        Box(
-            modifier = Modifier.padding(contentPadding)
-        ) {
-            AsyncImage(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.6f),
-                model = ImageRequest.Builder(LocalContext.current).data(article.imageUrl)
-                    .crossfade(true).build(),
-                contentDescription = "image of " + article.title,
-                contentScale = ContentScale.Crop
-            )
+        if (article != null) {
             Box(
-                modifier = Modifier
-                    .fillMaxHeight(0.6f)
-                    .fillMaxWidth()
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                Color.Black.copy(alpha = 0.7f)
-                            ),
-                            startY = 0f,  // Gradient starts from top
-                            endY = Float.POSITIVE_INFINITY  // Gradient ends at bottom
-                        )
-                    )
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(scrollState)
+                modifier = Modifier.padding(contentPadding)
             ) {
-                CustomTopBar(modifier = Modifier.padding(top = 16.dp))
-                Spacer(modifier = Modifier.height(300.dp))
-                Text(
-                    text = article.title,
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    style = TextStyle(
-                        fontSize = 25.sp,
-                        color = Color.White
-                    )
+                AsyncImage(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.6f),
+                    model = ImageRequest.Builder(LocalContext.current).data(article.imageUrl)
+                        .crossfade(true).build(),
+                    contentDescription = "image of " + article.title,
+                    contentScale = ContentScale.Crop
                 )
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-                    Text(
-                        text = article.author ?: "Unknown Author",
-                        style = TextStyle(
-                            fontSize = 15.sp,
-                            color = Color.White
-                        )
-                    )
-                    Text(
-                        text = "  •  " + Utilities().getRelativeTime(article.publishedAt),
-                        style = TextStyle(
-                            fontSize = 15.sp,
-                            color = Color.White
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.height(20.dp))
                 Box(
                     modifier = Modifier
-                        .border(
-                            width = 0.dp,
-                            shape = RoundedCornerShape(25),
-                            color = Color.Transparent
-                        )
-                        .background(color = Color.White, shape = RoundedCornerShape(10))
+                        .fillMaxHeight(0.6f)
                         .fillMaxWidth()
-                        .padding(24.dp)
-                        .defaultMinSize(minHeight = 500.dp)
-                ) {
-                    Column(
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = article.source.name ?: "",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 24.sp,
-                                )
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black.copy(alpha = 0.7f)
+                                ),
+                                startY = 0f,  // Gradient starts from top
+                                endY = Float.POSITIVE_INFINITY  // Gradient ends at bottom
                             )
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Box(
-                                modifier = Modifier
-                                    .background(
-                                        color = Color(0xff2668d1),
-                                        shape = RoundedCornerShape(50)
-                                    )
-                                    .padding(1.5.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Filled.Check,
-                                    contentDescription = "Verified",
-                                    modifier = Modifier.height(10.dp),
-                                    tint = Color.White
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = article.content ?: "No content available"
                         )
+                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(scrollState)
+                ) {
+                    CustomTopBar(modifier = Modifier.padding(top = 16.dp))
+                    Spacer(modifier = Modifier.height(300.dp))
+                    Text(
+                        text = article.title,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        style = TextStyle(
+                            fontSize = 25.sp,
+                            color = Color.White
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        Text(
+                            text = article.author ?: "Unknown Author",
+                            style = TextStyle(
+                                fontSize = 15.sp,
+                                color = Color.White
+                            )
+                        )
+                        Text(
+                            text = "  •  " + Utilities().getRelativeTime(article.publishedAt),
+                            style = TextStyle(
+                                fontSize = 15.sp,
+                                color = Color.White
+                            )
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Box(
+                        modifier = Modifier
+                            .border(
+                                width = 0.dp,
+                                shape = RoundedCornerShape(25),
+                                color = Color.Transparent
+                            )
+                            .background(color = Color.White, shape = RoundedCornerShape(10))
+                            .fillMaxWidth()
+                            .padding(24.dp)
+                            .defaultMinSize(minHeight = 500.dp)
+                    ) {
+                        Column(
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = article.source.name ?: "",
+                                    style = TextStyle(
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 24.sp,
+                                    )
+                                )
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Box(
+                                    modifier = Modifier
+                                        .background(
+                                            color = Color(0xff2668d1),
+                                            shape = RoundedCornerShape(50)
+                                        )
+                                        .padding(1.5.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Check,
+                                        contentDescription = "Verified",
+                                        modifier = Modifier.height(10.dp),
+                                        tint = Color.White
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = article.content ?: "No content available"
+                            )
+                        }
                     }
                 }
             }
         }
-
 
     }
 }

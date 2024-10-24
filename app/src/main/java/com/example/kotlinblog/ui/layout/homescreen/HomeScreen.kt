@@ -44,13 +44,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kotlinblog.models.Article
 import com.example.kotlinblog.state.BlogUiState
 import com.example.kotlinblog.state.HomeViewModel
 import com.example.kotlinblog.ui.generic.LoadingIndicator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(onSearchButtonClicked: () -> Unit, modifier: Modifier = Modifier) {
+fun HomeScreen(
+    onSearchButtonClicked: () -> Unit,
+    onCardClicked: (article: Article) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     val homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory)
 
@@ -138,7 +143,7 @@ fun HomeScreen(onSearchButtonClicked: () -> Unit, modifier: Modifier = Modifier)
                     )
                 }
             }
-            HeadlinesScroller(homeViewModel = homeViewModel)
+            HeadlinesScroller(homeViewModel = homeViewModel, onCardClicked = onCardClicked)
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -164,13 +169,17 @@ fun HomeScreen(onSearchButtonClicked: () -> Unit, modifier: Modifier = Modifier)
                     )
                 }
             }
-            NewsDetailsCards()
+            NewsDetailsCards(onCardClicked = onCardClicked)
         }
     }
 }
 
 @Composable
-fun HeadlinesScroller(homeViewModel: HomeViewModel = viewModel(), modifier: Modifier = Modifier) {
+fun HeadlinesScroller(
+    homeViewModel: HomeViewModel = viewModel(),
+    onCardClicked: (article: Article) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     var articleCount by remember { mutableStateOf(0) }
 
@@ -190,6 +199,7 @@ fun HeadlinesScroller(homeViewModel: HomeViewModel = viewModel(), modifier: Modi
             ) { index ->
                 NewsCard(
                     article = (breakingNewsState as BlogUiState.Success).articles[index],
+                    onCardClicked = onCardClicked,
                     modifier = Modifier
                         .fillMaxWidth()
                 )
@@ -221,7 +231,11 @@ fun HeadlinesScroller(homeViewModel: HomeViewModel = viewModel(), modifier: Modi
 }
 
 @Composable
-fun NewsDetailsCards(homeViewModel: HomeViewModel = viewModel(), modifier: Modifier = Modifier) {
+fun NewsDetailsCards(
+    homeViewModel: HomeViewModel = viewModel(),
+    onCardClicked: (article: Article) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     val recommendedNewsState by homeViewModel.recommendedNews.collectAsState()
 
@@ -231,7 +245,10 @@ fun NewsDetailsCards(homeViewModel: HomeViewModel = viewModel(), modifier: Modif
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 items((recommendedNewsState as BlogUiState.Success).articles.size) {
-                    NewsDetailsCard(article = (recommendedNewsState as BlogUiState.Success).articles[it])
+                    NewsDetailsCard(
+                        article = (recommendedNewsState as BlogUiState.Success).articles[it],
+                        onCardClicked = onCardClicked
+                    )
                 }
             }
         }

@@ -45,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kotlinblog.models.Article
 import com.example.kotlinblog.state.BlogUiState
 import com.example.kotlinblog.state.SearchViewModel
 import com.example.kotlinblog.state.Tag
@@ -53,7 +54,11 @@ import com.example.kotlinblog.ui.layout.homescreen.NewsDetailsCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchPage(onBackButtonClicked: () -> Unit, modifier: Modifier = Modifier) {
+fun SearchPage(
+    onBackButtonClicked: () -> Unit,
+    onCardClicked: (article: Article) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     val searchViewModel: SearchViewModel = viewModel(factory = SearchViewModel.Factory)
 
@@ -68,7 +73,8 @@ fun SearchPage(onBackButtonClicked: () -> Unit, modifier: Modifier = Modifier) {
             ) {
                 IconButton(onClick = {
                     searchViewModel.clearSearchQuery()
-                    onBackButtonClicked() }) {
+                    onBackButtonClicked()
+                }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBackIosNew,
                         contentDescription = "Back Button"
@@ -97,7 +103,7 @@ fun SearchPage(onBackButtonClicked: () -> Unit, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(16.dp))
             SearchField(searchViewModel = searchViewModel)
             Tags(searchViewModel = searchViewModel)
-            Articles(searchViewModel = searchViewModel)
+            Articles(searchViewModel = searchViewModel, onCardClicked = onCardClicked)
         }
 
     }
@@ -236,7 +242,11 @@ fun Tags(searchViewModel: SearchViewModel = viewModel(), modifier: Modifier = Mo
 }
 
 @Composable
-fun Articles(searchViewModel: SearchViewModel = viewModel(), modifier: Modifier = Modifier) {
+fun Articles(
+    searchViewModel: SearchViewModel = viewModel(),
+    onCardClicked: (article: Article) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     val showSearchResults by searchViewModel.showSearchResults.collectAsState()
 
@@ -255,7 +265,10 @@ fun Articles(searchViewModel: SearchViewModel = viewModel(), modifier: Modifier 
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 items(successState.articles.size) {
-                    NewsDetailsCard(article = successState.articles[it])
+                    NewsDetailsCard(
+                        article = successState.articles[it],
+                        onCardClicked = onCardClicked
+                    )
                 }
             }
         }

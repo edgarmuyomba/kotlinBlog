@@ -2,6 +2,7 @@ package com.example.kotlinblog.ui.layout.homescreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,13 +38,18 @@ import com.example.kotlinblog.models.Source
 import com.example.kotlinblog.utils.Utilities
 
 @Composable
-fun NewsCard(article: Article, modifier: Modifier = Modifier) {
+fun NewsCard(
+    article: Article,
+    onCardClicked: (article: Article) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(200.dp)
             .clip(RoundedCornerShape(10.dp))
             .border(shape = RoundedCornerShape(10.dp), width = 1.dp, color = Color.White)
+            .clickable { onCardClicked(article) }
     ) {
         article.imageUrl?.let {
             AsyncImage(
@@ -135,9 +141,3 @@ val article = Article(
     publishedAt = "2024-10-23T02:30:00Z",
     content = "The Georgia Supreme Court wont let the state election board enforce a slate of controversial new election rules that were passed by allies of Donald Trump, ruling Tuesday against Republicans who asked..."
 )
-
-@Preview
-@Composable
-fun NewsCardPreview() {
-    NewsCard(article = article)
-}
