@@ -29,6 +29,9 @@ import com.example.kotlinblog.utils.Utilities
 
 @Composable
 fun NewsDetailsCard(article: Article, modifier: Modifier = Modifier) {
+
+    val author = (article.author ?: "Unknown").split(" ").take(2).joinToString(" ")
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -58,7 +61,7 @@ fun NewsDetailsCard(article: Article, modifier: Modifier = Modifier) {
             Spacer(Modifier.height(10.dp))
             Row {
                 Text(
-                    text = article.author ?: "Unknown",
+                    text = author,
                 )
                 Spacer(Modifier.width(10.dp))
                 Text(

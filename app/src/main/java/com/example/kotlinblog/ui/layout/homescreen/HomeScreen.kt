@@ -61,9 +61,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .border(
-                        width = 1.dp, color = Color(0xffdadada), shape = RoundedCornerShape(50)
+                        width = 1.dp, color = Color(0xffededed), shape = RoundedCornerShape(50)
                     )
-                    .background(color = Color(0xffdadada), shape = RoundedCornerShape(50))
+                    .background(color = Color(0xffededed), shape = RoundedCornerShape(50))
             ) {
                 IconButton(
                     modifier = Modifier.padding(0.dp),
@@ -78,9 +78,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .border(
-                        width = 1.dp, color = Color(0xffdadada), shape = RoundedCornerShape(50)
+                        width = 1.dp, color = Color(0xffededed), shape = RoundedCornerShape(50)
                     )
-                    .background(color = Color(0xffdadada), shape = RoundedCornerShape(50))
+                    .background(color = Color(0xffededed), shape = RoundedCornerShape(50))
             ) {
                 IconButton(
                     modifier = Modifier.padding(0.dp),
@@ -94,9 +94,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .border(
-                        width = 1.dp, color = Color(0xffdadada), shape = RoundedCornerShape(50)
+                        width = 1.dp, color = Color(0xffededed), shape = RoundedCornerShape(50)
                     )
-                    .background(color = Color(0xffdadada), shape = RoundedCornerShape(50))
+                    .background(color = Color(0xffededed), shape = RoundedCornerShape(50))
             ) {
                 IconButton(
                     modifier = Modifier.padding(0.dp),
@@ -224,8 +224,6 @@ fun HeadlinesScroller(homeViewModel: HomeViewModel = viewModel(), modifier: Modi
 fun NewsDetailsCards(homeViewModel: HomeViewModel = viewModel(), modifier: Modifier = Modifier) {
 
     val recommendedNewsState by homeViewModel.recommendedNews.collectAsState()
-
-    val articles = buildList<Article> { repeat(7) { add(article) } }
 
     when (recommendedNewsState) {
         is BlogUiState.Success -> {
