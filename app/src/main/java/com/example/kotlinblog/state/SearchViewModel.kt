@@ -54,10 +54,18 @@ class SearchViewModel(private val newsRepository: NewsRepository) : ViewModel() 
         }
     }
 
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
+        Log.d("SearchViewModel", "Search query updated to: ${_searchQuery.value}")
+    }
+
+    fun clearSearchQuery() {
+        _searchQuery.value = ""
+    }
+
     fun setSelectedTag(tag: Tag) {
         _selectedTag.value = tag
-        Log.d("SearchViewModel", "Selected tag: ${_selectedTag.value}")
-//        getTagResults()
+        getTagResults()
     }
 
     fun getTagResults() {
