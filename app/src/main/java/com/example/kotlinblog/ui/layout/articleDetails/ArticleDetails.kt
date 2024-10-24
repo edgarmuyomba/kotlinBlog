@@ -48,7 +48,11 @@ import com.example.kotlinblog.utils.Utilities
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArticleDetailsPage(article: Article?, modifier: Modifier = Modifier) {
+fun ArticleDetailsPage(
+    article: Article?,
+    onBackButtonClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     val scrollState = rememberScrollState()
 
@@ -85,9 +89,13 @@ fun ArticleDetailsPage(article: Article?, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
+
                 ) {
-                    CustomTopBar(modifier = Modifier.padding(top = 16.dp))
-                    Spacer(modifier = Modifier.height(300.dp))
+                    CustomTopBar(
+                        onBackButtonClicked = onBackButtonClicked,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    Spacer(modifier = Modifier.height(250.dp))
                     Text(
                         text = article.title,
                         modifier = Modifier.padding(horizontal = 16.dp),
@@ -171,7 +179,7 @@ fun ArticleDetailsPage(article: Article?, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CustomTopBar(modifier: Modifier = Modifier) {
+fun CustomTopBar(onBackButtonClicked: () -> Unit, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
     ) {
@@ -180,10 +188,11 @@ fun CustomTopBar(modifier: Modifier = Modifier) {
                 .background(color = Color.White.copy(alpha = 0.2f), shape = RoundedCornerShape(50))
                 .blur(radius = 1.dp)
         ) {
-            IconButton(onClick = {}) {
+            IconButton(onClick = { onBackButtonClicked() }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBackIosNew,
-                    contentDescription = "Back Button"
+                    contentDescription = "Back Button",
+                    tint = Color.White,
                 )
             }
         }
@@ -201,7 +210,8 @@ fun CustomTopBar(modifier: Modifier = Modifier) {
             IconButton(modifier = Modifier.padding(0.dp), onClick = {}) {
                 Icon(
                     imageVector = Icons.Filled.BookmarkBorder,
-                    contentDescription = "bookmark"
+                    contentDescription = "bookmark",
+                    tint = Color.White,
                 )
             }
         }
@@ -219,15 +229,10 @@ fun CustomTopBar(modifier: Modifier = Modifier) {
             IconButton(modifier = Modifier.padding(0.dp), onClick = { }) {
                 Icon(
                     imageVector = Icons.Filled.MoreHoriz,
-                    contentDescription = "more options"
+                    contentDescription = "more options",
+                    tint = Color.White,
                 )
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun ArticleDetailsPagePreview() {
-    ArticleDetailsPage(article = article)
 }

@@ -59,7 +59,9 @@ fun KotlinBlogApp(navController: NavHostController = rememberNavController()) {
                 })
         }
         composable(route = "article-details") {
-            ArticleDetailsPage(article = selectedArticle)
+            ArticleDetailsPage(
+                article = selectedArticle,
+                onBackButtonClicked = { navController.popBackStack() })
         }
     }
 }
