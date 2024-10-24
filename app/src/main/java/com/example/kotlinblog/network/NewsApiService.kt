@@ -1,6 +1,5 @@
 package com.example.kotlinblog.network
 
-import com.example.kotlinblog.data.NewsRepository
 import com.example.kotlinblog.models.NewsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,6 +17,12 @@ interface NewsApiService {
         @Query("q") query: String,
         @Query("sortBy") sortBy: String = "popularity",
         @Query("apiKey") apiKey: String
-    ): NewsRepository
+    ): NewsResponse
+
+    @GET("top-headlines")
+    suspend fun getTagNews(
+        @Query("category") tag: String,
+        @Query("apiKey") apiKey: String
+    ): NewsResponse
 
 }

@@ -36,7 +36,7 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
                 Log.e("HomeViewModel", e.toString())
                 _breakingNews.value = BlogUiState.Error("Failed to load breaking news. Try again")
                 _recommendedNews.value =
-                    BlogUiState.Error("Failed to load breaking news. Try again")
+                    BlogUiState.Error("Failed to load recommended news. Try again")
             }
         }
     }
