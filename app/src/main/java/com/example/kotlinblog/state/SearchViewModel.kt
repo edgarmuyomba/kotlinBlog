@@ -30,6 +30,9 @@ class SearchViewModel(private val newsRepository: NewsRepository) : ViewModel() 
     private val _searchResults = MutableStateFlow<BlogUiState>(BlogUiState.Loading)
     val searchResults = _searchResults.asStateFlow()
 
+    private val _showSearchResults = MutableStateFlow<Boolean>(false)
+    val showSearchResults = _showSearchResults.asStateFlow()
+
     private val _selectedTag = MutableStateFlow<Tag>(Tag.General)
     val selectedTag = _selectedTag.asStateFlow()
 
@@ -42,6 +45,7 @@ class SearchViewModel(private val newsRepository: NewsRepository) : ViewModel() 
 
     fun search() {
         viewModelScope.launch {
+            _showSearchResults.value = true
             _searchResults.value = BlogUiState.Loading
             try {
                 val results = newsRepository.searchNews(_searchQuery.value)
@@ -56,10 +60,10 @@ class SearchViewModel(private val newsRepository: NewsRepository) : ViewModel() 
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
-        Log.d("SearchViewModel", "Search query updated to: ${_searchQuery.value}")
     }
 
     fun clearSearchQuery() {
+        _showSearchResults.value = false
         _searchQuery.value = ""
     }
 
